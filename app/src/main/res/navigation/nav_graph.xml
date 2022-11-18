@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/passwordListFragment">
+
+    <fragment
+        android:id="@+id/passwordListFragment"
+        android:name="com.bignerdranch.android.passwordmanager.PasswordListFragment"
+        android:label="PasswordListFragment"
+        tools:layout="@layout/fragment_password_list">
+        <action
+            android:id="@+id/show_password_entry"
+            app:destination="@id/passwordViewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/passwordViewFragment"
+        android:name="com.bignerdranch.android.passwordmanager.PasswordViewFragment"
+        android:label="PasswordViewFragment"
+        tools:layout="@layout/fragment_password_view">
+        <argument
+            android:name="passwordId"
+            app:argType="java.util.UUID" />
+        <action
+            android:id="@+id/save_password_entry"
+            app:destination="@id/passwordListFragment"/>
+    </fragment>
+
+</navigation>

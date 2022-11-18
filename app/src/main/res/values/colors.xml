@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue_200">#FF00AAFF</color>
+    <color name="blue_500">#FF2255FF</color>
+    <color name="blue_700">#FF3700FF</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black_variant">#FF222222</color>
+    <color name="gradient_start">#FF2299FF</color>
+    <color name="gradient_end">#FF0066FF</color>
+    <color name="hint_text_color">#AAFFFFFF</color>
+</resources>
