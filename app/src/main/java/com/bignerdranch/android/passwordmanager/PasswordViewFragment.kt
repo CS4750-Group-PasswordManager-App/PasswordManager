@@ -1,5 +1,6 @@
 package com.bignerdranch.android.passwordmanager
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,7 +26,6 @@ private const val TAG = "PasswordViewFragment"
 class PasswordViewFragment : Fragment() {
 
     //private lateinit var binding: FragmentPasswordViewBinding
-
     private var _binding: FragmentPasswordViewBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
@@ -89,7 +90,7 @@ class PasswordViewFragment : Fragment() {
             }
 
             saveEntryButton.setOnClickListener {
-                // Save any updates and navihate back to list fragment
+                // Save any updates and navigate back to list fragment
             }
         }
 
@@ -121,6 +122,7 @@ class PasswordViewFragment : Fragment() {
                 usernameEntry.setText(password.username)
             }
             if (passwordEntry.text.toString() != password.password){
+
                 passwordEntry.setText(password.password)
             }
         }

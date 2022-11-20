@@ -29,6 +29,7 @@ class CryptoManager {
             .build()
 
         keyGenerator.init(keyGenParameterSpec)
+        println("KeyGenerated")
         return keyGenerator.generateKey()
 
     }

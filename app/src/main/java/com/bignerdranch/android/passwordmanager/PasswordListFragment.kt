@@ -66,8 +66,6 @@ class PasswordListFragment : Fragment() {
     }
 
 
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -117,6 +115,7 @@ class PasswordListFragment : Fragment() {
                 email = "",
                 username = "",
                 password = "",
+                iv = "".toByteArray(),
                 accessDate = Date(),
             )
 

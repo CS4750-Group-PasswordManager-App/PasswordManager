@@ -13,5 +13,6 @@ data class Password(
     val email: String,
     val username: String, //Optional or if empty copy email to it?
     val password: String,
+    val iv: ByteArray,
     val accessDate: Date,
 )
