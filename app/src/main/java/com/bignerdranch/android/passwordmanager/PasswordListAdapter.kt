@@ -35,10 +35,20 @@ class PasswordHolder(private val binding: ListEntryPasswordBinding) : RecyclerVi
 
     fun bind(password: Password, onPasswordEntryClicked: (passwordId: UUID) -> Unit){
         binding.passwordTitle.text = password.title
-        binding.passwordDate.text = password.email.toString()
+        binding.passwordEmail.text = displayEmail(password.email.toString())
 
         binding.root.setOnClickListener {
             onPasswordEntryClicked(password.id)
         }
+    }
+
+
+    private fun displayEmail(passwordEmail: String) : String{
+
+        var result = passwordEmail.take(4)
+        for (i in 1..12){
+            result += "*"
+        }
+        return result
     }
 }
