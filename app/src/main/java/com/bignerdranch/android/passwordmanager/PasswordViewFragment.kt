@@ -98,6 +98,9 @@ class PasswordViewFragment : Fragment() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 passwordEntryViewModel.password.collect { password ->
                     password?.let { updateUi(it) }
+                    passwordEntryViewModel.updatePassword { oldPassword ->
+                        oldPassword.copy(accessDate = Date())
+                    }
                 }
             }
         }

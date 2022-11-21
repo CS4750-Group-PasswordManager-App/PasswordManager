@@ -12,7 +12,7 @@ import java.util.UUID
 @Dao
 interface PasswordDao {
 
-    @Query("SELECT * From Password ") //Order Descending by accessdate
+    @Query("SELECT * From Password Order By accessDate DESC") //Order Descending by accessdate
     fun getPasswords(): Flow<List<Password>>
 
     @Query("SELECT * From Password Where id=(:id)")
