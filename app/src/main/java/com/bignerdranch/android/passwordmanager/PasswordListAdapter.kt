@@ -38,6 +38,12 @@ class PasswordHolder(private val binding: ListEntryPasswordBinding) : RecyclerVi
         binding.passwordEmail.text = displayEmail(password.email.toString())
 
         binding.root.setOnClickListener {
+            println(password.password)
+
+            println(password.iv)
+
+            // Decrypt
+
             onPasswordEntryClicked(password.id)
         }
     }
@@ -46,9 +52,11 @@ class PasswordHolder(private val binding: ListEntryPasswordBinding) : RecyclerVi
     private fun displayEmail(passwordEmail: String) : String{
 
         var result = passwordEmail.take(4)
+
         for (i in 1..12){
             result += "*"
         }
+
         return result
     }
 }

@@ -56,6 +56,9 @@ class PasswordListFragment : Fragment() {
                 passwordListViewModel.passwords.collect { passwords ->
                     binding.passwordRecyclerView.adapter = PasswordListAdapter(passwords) { passwordId ->
                         searchView?.clearFocus()
+
+                        // Decryption
+
                         findNavController().navigate(
                             PasswordListFragmentDirections.showPasswordEntry(passwordId)
                         )
