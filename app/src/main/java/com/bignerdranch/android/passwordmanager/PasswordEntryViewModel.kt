@@ -1,12 +1,10 @@
 package com.bignerdranch.android.passwordmanager
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.tabs.TabLayout.TabGravity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -40,7 +38,6 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
     }
 
 
-
     override fun onCleared() {
         super.onCleared()
 
@@ -64,6 +61,17 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
 
         // If back button is used, it passes the entry to update if any values occurred
     }
+
+    fun storePassword() {
+        password.value?.let { passwordRepository.updatePassword(it)}
+        onCleared()
+    }
+
+    public fun deletePassword() {
+        password.value?.let { passwordRepository.deletePassword(it) }
+        onCleared()
+    }
+
 }
 
 
