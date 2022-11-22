@@ -8,7 +8,7 @@
     <string name="password_username_hint">Enter Username</string>
     <string name="password_decrypted">Password: *</string>
     <string name="password_decrypted_hint">Enter Password</string>
-    <string name="entry_save">Save Password Entry</string>
+    <string name="entry_save">Save &amp; Close Password Entry</string>
     <string name="delete_password_entry">Delete Password</string>
     <string name="new_password_entry">New Password</string>
     <string name="search">Search</string>
