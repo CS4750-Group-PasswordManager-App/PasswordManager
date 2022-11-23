@@ -26,7 +26,6 @@ private const val TAG = "PasswordViewFragment"
 @RequiresApi(Build.VERSION_CODES.M)
 class PasswordViewFragment : Fragment() {
 
-    //private lateinit var binding: FragmentPasswordViewBinding
     private var _binding: FragmentPasswordViewBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
@@ -36,15 +35,11 @@ class PasswordViewFragment : Fragment() {
     private var cryptoManager = CryptoManager()
 
 
-    //private lateinit var password: Password
-
     private val args: PasswordViewFragmentArgs by navArgs()
 
     private val passwordEntryViewModel: PasswordEntryViewModel by viewModels {
         PasswordEntryViewModelFactory(args.passwordId)
     }
-
-    private val passwordRepository = PasswordRepository.get()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,49 +87,41 @@ class PasswordViewFragment : Fragment() {
             passwordEntry.doOnTextChanged { text, _, _, _ ->
                 //password = password.copy(password = text.toString())
                 passwordEntryViewModel.updatePassword { oldPassword ->
-
-                    //var cipher = cryptoManager.encrypt(text.toString())
                     oldPassword.copy(password = text.toString())
                 }
-                Log.d(TAG, "HERE")
             }
 
             saveEntryButton.setOnClickListener {
-                // Save any updates and navigate back to list fragment
-                //findNavController().navigate()
-                passwordEntryViewModel.updatePassword { oldPassword ->
-                    //Cipher Encrypt
-                    var cipher = cryptoManager.encrypt(oldPassword.password)
-                    oldPassword.copy(password = cipher.first.toString())
-                    Log.d(TAG, oldPassword.toString())
-                    Log.d(TAG, String(cipher.first))
-
-                    oldPassword.copy(iv = cipher.second)
-
-                }
-                println("HERE")
-
-
+                // Save & Close Entries
+                passwordEntryViewModel.storePassword()
+                findNavController().navigate(PasswordViewFragmentDirections.savePasswordEntry())
             }
+
+            deleteEntryButton.setOnClickListener {
+                // Delete Entry
+                passwordEntryViewModel.deletePassword()
+                findNavController().navigate(PasswordViewFragmentDirections.savePasswordEntry())
+            }
+
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 passwordEntryViewModel.password.collect { password ->
                     password?.let { updateUi(it) }
-
                     passwordEntryViewModel.updatePassword { oldPassword ->
+                        println("DATE UPDATED")
                         oldPassword.copy(accessDate = Date())
                     }
-
                 }
             }
         }
-
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
+        println("DESTROYED")
         _binding = null
     }
 

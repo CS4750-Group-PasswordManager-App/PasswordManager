@@ -41,10 +41,8 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
     override fun onCleared() {
         super.onCleared()
 
-        println(password.value)
-
         // Saving Database Values
-        password.value?.let { passwordRepository.updatePassword(it)}
+        //password.value?.let { passwordRepository.updatePassword(it)}
 
 
         var cipher = password.value?.let { cryptoManager.encrypt(it.password) }
@@ -52,14 +50,10 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
             println("Cipher: " + String(cipher.first))
         }
 
-        //password.value.password = cipher.first;
-
-
         var decryptedText = cipher?.let { cryptoManager.decrypt(it.first, cipher.second) }
 
         println("Decrypted_Data: $decryptedText" )
 
-        // If back button is used, it passes the entry to update if any values occurred
     }
 
     fun storePassword() {
@@ -67,7 +61,7 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
         onCleared()
     }
 
-    public fun deletePassword() {
+    fun deletePassword() {
         password.value?.let { passwordRepository.deletePassword(it) }
         onCleared()
     }

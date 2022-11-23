@@ -37,6 +37,12 @@ class PasswordRepository private constructor(context: Context,
         database.passwordDao().addPassword(password)
     }
 
+    fun deletePassword(password: Password) {
+        coroutineScope.launch {
+            database.passwordDao().deletePassword(password)
+        }
+    }
+
 
     companion object {
         private var INSTANCE: PasswordRepository? = null

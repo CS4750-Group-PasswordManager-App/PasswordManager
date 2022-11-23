@@ -27,7 +27,6 @@ class PasswordListAdapter
     }
     override fun getItemCount() = passwords.size
 
-
 }
 
 
@@ -38,16 +37,10 @@ class PasswordHolder(private val binding: ListEntryPasswordBinding) : RecyclerVi
         binding.passwordEmail.text = displayEmail(password.email.toString())
 
         binding.root.setOnClickListener {
-            println(password.password)
-
-            println(password.iv)
-
             // Decrypt
-
             onPasswordEntryClicked(password.id)
         }
     }
-
 
     private fun displayEmail(passwordEmail: String) : String{
 
