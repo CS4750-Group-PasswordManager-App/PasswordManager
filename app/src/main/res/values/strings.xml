@@ -10,6 +10,7 @@
     <string name="password_decrypted_hint">Enter Password</string>
     <string name="entry_save">Save &amp; Close Password Entry</string>
     <string name="delete_password_entry">Delete Password</string>
+    <string name="show_decrypted_password">Decrypt Password</string>
     <string name="new_password_entry">New Password</string>
     <string name="search">Search</string>
     <string name="clear_search">Clear Search</string>
