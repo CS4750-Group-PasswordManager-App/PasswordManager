@@ -121,6 +121,7 @@ class PasswordListFragment : Fragment() {
                 iv = "".toByteArray(),
                 accessDate = Date(),
             )
+            println("Just Created INITIAL V :" + newPassword.iv)
 
             passwordListViewModel.addPassword(newPassword)
             findNavController().navigate(

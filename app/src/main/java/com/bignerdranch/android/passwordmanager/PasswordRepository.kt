@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.util.UUID
+import java.util.*
 
 
 private const val DATABASE_NAME = "password-database"
@@ -30,6 +30,21 @@ class PasswordRepository private constructor(context: Context,
     fun updatePassword(password: Password) {
         coroutineScope.launch {
             database.passwordDao().updatePassword(password)
+        }
+    }
+
+    fun updateLastOpened(accessDate : Date, id : UUID){
+        coroutineScope.launch{
+            database.passwordDao().updateLastOpened(accessDate, id)
+        }
+    }
+
+    suspend fun getPasswordVector(id : UUID) : ByteArray = database.passwordDao().getPasswordVector(id)
+
+
+    fun updateVector(iv : ByteArray, id : UUID){
+        coroutineScope.launch{
+            database.passwordDao().updateVector(iv, id)
         }
     }
 

@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -41,29 +42,60 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
     override fun onCleared() {
         super.onCleared()
 
-        // Saving Database Values
-        //password.value?.let { passwordRepository.updatePassword(it)}
 
-
-        var cipher = password.value?.let { cryptoManager.encrypt(it.password) }
-        if (cipher != null) {
-            println("Cipher: " + String(cipher.first))
+        password.value?.let {
+            if(it.password == "" || it.title == "" || it.username == ""){
+                passwordRepository.deletePassword(it)
+            }
         }
 
-        var decryptedText = cipher?.let { cryptoManager.decrypt(it.first, cipher.second) }
+        val recentDate = Date()
+        password.value?.let {
+                passwordRepository.updateLastOpened(recentDate, it.id) }
 
-        println("Decrypted_Data: $decryptedText" )
+
+//
+//        var cipher = password.value?.let { cryptoManager.encrypt(it.password) }
+//        if (cipher != null) {
+//            println("Cipher: " + String(cipher.first))
+//        }
+//
+//        var decryptedText = cipher?.let { cryptoManager.decrypt(it.first, cipher.second) }
+//
+//        println("Decrypted_Data: $decryptedText" )
 
     }
 
     fun storePassword() {
         password.value?.let { passwordRepository.updatePassword(it)}
+        encryptPassword()
         onCleared()
     }
 
     fun deletePassword() {
         password.value?.let { passwordRepository.deletePassword(it) }
         onCleared()
+    }
+
+    fun encryptPassword() {
+        password.value?.let {
+            var cipher = cryptoManager.encrypt(it.password)
+            println("INITIAL IV: " + it.iv)
+            println(cipher.first)
+            println(cipher.first.toString())
+            println(String(cipher.first))
+            println(cipher.second)
+            passwordRepository.updateVector(cipher.second, it.id)
+        }
+
+
+    }
+
+    fun decryptPassword() {
+        password.value?.let {
+            var cipher = cryptoManager.decrypt(it.password.toByteArray(), it.iv)
+            println(cipher)
+        }
     }
 
 }

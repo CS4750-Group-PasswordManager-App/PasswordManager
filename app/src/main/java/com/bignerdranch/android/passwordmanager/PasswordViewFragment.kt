@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -84,15 +86,66 @@ class PasswordViewFragment : Fragment() {
                 }
             }
 
-            passwordEntry.doOnTextChanged { text, _, _, _ ->
-                //password = password.copy(password = text.toString())
-                passwordEntryViewModel.updatePassword { oldPassword ->
-                    oldPassword.copy(password = text.toString())
+//            passwordEntry.doOnTextChanged { text, _, _, _ ->
+//                //password = password.copy(password = text.toString())
+//                passwordEntryViewModel.updatePassword { oldPassword ->
+//                    oldPassword.copy(password = text.toString())
+//                }
+//            }
+
+            decryptButton.setOnClickListener {
+                var password : EditText = view.findViewById(R.id.password_entry)
+                println("BEFORE CIPHER")
+
+                //var cipher = cryptoManager.decrypt(pass.toByteArray(), iv)
+
+
+                decryptedPassword.text = "DECRYPTED"
+                if(decryptedPassword.isVisible){
+                    decryptedPassword.visibility = View.INVISIBLE
+                    decryptButton.text = "Decrypt Password"
+                }
+                else {
+                    decryptedPassword.visibility = View.VISIBLE
+                    decryptButton.text = "Encrypt Password"
                 }
             }
 
+
             saveEntryButton.setOnClickListener {
                 // Save & Close Entries
+
+                var save = passwordEntry.text;
+                println(save)
+                //                passwordEntryViewModel.updatePassword { oldPassword ->
+//                    oldPassword.copy(password = text.toString())
+//                }
+
+
+
+                var password : EditText = view.findViewById(R.id.password_entry)
+                //var cipher = cryptoManager.encrypt(password.text.toString())
+
+                //password.setText(cipher.first.toString())
+                //Log.d(TAG, "${password.text}")
+
+
+                passwordEntryViewModel.updatePassword { oldPassword ->
+                    oldPassword.copy(password = passwordEntry.text.toString())
+                }
+                //passwordEntryViewModel.encryptPassword()
+                //passwordEntryViewModel.decryptPassword()
+
+
+//                passwordEntryViewModel.updatePassword { oldPassword ->
+//                    oldPassword.copy(iv = cipher.second)
+//                }
+//                passwordEntryViewModel.updatePassword { oldPassword ->
+//                    oldPassword.copy(password = String(cipher.first))
+//                }
+//
+//                println(cipher.second.toString())
+
                 passwordEntryViewModel.storePassword()
                 findNavController().navigate(PasswordViewFragmentDirections.savePasswordEntry())
             }
@@ -109,10 +162,6 @@ class PasswordViewFragment : Fragment() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 passwordEntryViewModel.password.collect { password ->
                     password?.let { updateUi(it) }
-                    passwordEntryViewModel.updatePassword { oldPassword ->
-                        println("DATE UPDATED")
-                        oldPassword.copy(accessDate = Date())
-                    }
                 }
             }
         }
@@ -121,24 +170,28 @@ class PasswordViewFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        println("DESTROYED")
         _binding = null
     }
 
 
     private fun updateUi(password: Password) {
+
         binding.apply {
+
             if (titleEntry.text.toString() != password.title){
                 titleEntry.setText(password.title)
             }
             if (emailEntry.text.toString() != password.email){
                 emailEntry.setText(password.email)
+
             }
             if (usernameEntry.text.toString() != password.username){
                 usernameEntry.setText(password.username)
+
             }
             if (passwordEntry.text.toString() != password.password){
                 passwordEntry.setText(password.password)
+                Log.d(TAG, "${password.password} : ${password.iv}")
             }
         }
 
