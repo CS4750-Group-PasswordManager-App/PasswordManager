@@ -33,6 +33,12 @@ interface PasswordDao {
     suspend fun updateVector(iv : ByteArray, id:UUID)
 
 
+    @Query("Update Password Set password=(:password) Where id=(:id)")
+    suspend fun  updatePasswordVector(password: ByteArray, id: UUID)
+
+    @Query("Update PASSWORD Set cipherText = (:cipherText) WHERE id = (:id)")
+    suspend fun storeEncryption(cipherText: String, id:UUID)
+
     @Update
     suspend fun updatePassword(password: Password)
 

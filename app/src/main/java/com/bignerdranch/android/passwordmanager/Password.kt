@@ -13,8 +13,9 @@ data class Password(
     val title: String,
     val email: String,
     val username: String, //Optional or if empty copy email to it?
-    val password: String,
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val iv: ByteArray,
+    val cipherText: String,
+    val password: ByteArray,
+    val iv: ByteArray,
     val accessDate: Date,
 )
 
