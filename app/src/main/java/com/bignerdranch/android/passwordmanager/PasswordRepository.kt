@@ -48,6 +48,20 @@ class PasswordRepository private constructor(context: Context,
         }
     }
 
+    fun updatePasswordVector(pass : ByteArray, id : UUID){
+        coroutineScope.launch{
+            database.passwordDao().updatePasswordVector(pass, id)
+        }
+    }
+
+
+
+    fun storeEncryption(password: String, id : UUID){
+        coroutineScope.launch{
+            database.passwordDao().storeEncryption(password, id)
+        }
+    }
+
     suspend fun addPassword(password: Password){
         database.passwordDao().addPassword(password)
     }

@@ -44,7 +44,7 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
 
 
         password.value?.let {
-            if(it.password == "" || it.title == "" || it.username == ""){
+            if( it.cipherText == "" || it.title == "" || it.username == ""){
                 passwordRepository.deletePassword(it)
             }
         }
@@ -72,30 +72,65 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
         onCleared()
     }
 
+
     fun deletePassword() {
         password.value?.let { passwordRepository.deletePassword(it) }
         onCleared()
     }
 
+
     fun encryptPassword() {
         password.value?.let {
-            var cipher = cryptoManager.encrypt(it.password)
+            var cipher = cryptoManager.encrypt(it.cipherText)
             println("INITIAL IV: " + it.iv)
             println(cipher.first)
-            println(cipher.first.toString())
             println(String(cipher.first))
             println(cipher.second)
-            passwordRepository.updateVector(cipher.second, it.id)
-        }
+            println(String(cipher.second))
 
+//            println(cryptoManager.decrypt(cipher.first, cipher.second))
+//
+//            var cipherFirst = cipher.first.toList()
+//            var cipherSecond = cipher.second.toList()
+//
+//            println("${cipherFirst} : ${cipherSecond}")
+//
+//            println("Conversion")
+//
+//            println("${cipherFirst.toByteArray()} : ${cipherSecond.toByteArray()}")
+//
+//            println("${String(cipherFirst.toByteArray())}")
+//
+//
+//            println("DECRYPTING")
+//            println(cryptoManager.decrypt(cipherFirst.toByteArray(), cipherSecond.toByteArray()))
+
+
+            passwordRepository.updateVector(cipher.second, it.id)
+            passwordRepository.updatePasswordVector(cipher.first, it.id)
+
+            passwordRepository.storeEncryption(String(cipher.first), it.id)
+
+        }
 
     }
 
-    fun decryptPassword() {
+    fun decryptPassword() : String {
+        var plain = ""
         password.value?.let {
-            var cipher = cryptoManager.decrypt(it.password.toByteArray(), it.iv)
-            println(cipher)
+            println(it.password)
+
+            println("DECRYPT")
+            println("${it.password} : ${it.iv}")
+
+            var cipherFirst = it.password.toList()
+            var cipherSecond = it.iv.toList()
+
+            println("${cipherFirst} : ${cipherSecond}")
+            plain = cryptoManager.decrypt(cipherFirst.toByteArray(), cipherSecond.toByteArray())
         }
+
+        return plain
     }
 
 }

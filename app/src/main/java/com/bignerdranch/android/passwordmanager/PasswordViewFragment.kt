@@ -100,14 +100,17 @@ class PasswordViewFragment : Fragment() {
                 //var cipher = cryptoManager.decrypt(pass.toByteArray(), iv)
 
 
-                decryptedPassword.text = "DECRYPTED"
+                //decryptedPassword.text = "DECRYPTED"
                 if(decryptedPassword.isVisible){
                     decryptedPassword.visibility = View.INVISIBLE
                     decryptButton.text = "Decrypt Password"
                 }
                 else {
+
+                    decryptedPassword.text = passwordEntryViewModel.decryptPassword()
                     decryptedPassword.visibility = View.VISIBLE
                     decryptButton.text = "Encrypt Password"
+
                 }
             }
 
@@ -131,20 +134,8 @@ class PasswordViewFragment : Fragment() {
 
 
                 passwordEntryViewModel.updatePassword { oldPassword ->
-                    oldPassword.copy(password = passwordEntry.text.toString())
+                    oldPassword.copy(cipherText = passwordEntry.text.toString())
                 }
-                //passwordEntryViewModel.encryptPassword()
-                //passwordEntryViewModel.decryptPassword()
-
-
-//                passwordEntryViewModel.updatePassword { oldPassword ->
-//                    oldPassword.copy(iv = cipher.second)
-//                }
-//                passwordEntryViewModel.updatePassword { oldPassword ->
-//                    oldPassword.copy(password = String(cipher.first))
-//                }
-//
-//                println(cipher.second.toString())
 
                 passwordEntryViewModel.storePassword()
                 findNavController().navigate(PasswordViewFragmentDirections.savePasswordEntry())
@@ -189,9 +180,9 @@ class PasswordViewFragment : Fragment() {
                 usernameEntry.setText(password.username)
 
             }
-            if (passwordEntry.text.toString() != password.password){
-                passwordEntry.setText(password.password)
-                Log.d(TAG, "${password.password} : ${password.iv}")
+            if (passwordEntry.text.toString() != password.cipherText){
+                passwordEntry.setText(password.cipherText)
+                //Log.d(TAG, "${password.password} : ${password.iv}")
             }
         }
 
