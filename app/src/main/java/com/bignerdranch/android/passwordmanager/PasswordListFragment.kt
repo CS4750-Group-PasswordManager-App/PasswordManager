@@ -3,7 +3,11 @@ package com.bignerdranch.android.passwordmanager
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isEmpty
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -51,9 +55,26 @@ class PasswordListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+            emptyListButton.setOnClickListener {
+                showNewPassword()
+            }
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 passwordListViewModel.passwords.collect { passwords ->
+                    if(passwords.isEmpty()){
+                        binding.emptyListButton.visibility = View.VISIBLE
+                        binding.listEmptyText.visibility = View.VISIBLE
+                        binding.passwordRecyclerView.visibility = View.GONE
+                    }
+                    else{
+                        binding.emptyListButton.visibility = View.GONE
+                        binding.listEmptyText.visibility = View.GONE
+                        binding.passwordRecyclerView.visibility = View.VISIBLE
+                    }
+
                     binding.passwordRecyclerView.adapter = PasswordListAdapter(passwords) { passwordId ->
                         searchView?.clearFocus()
 
@@ -72,6 +93,7 @@ class PasswordListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        println("LIST DESTROYED")
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -117,7 +139,8 @@ class PasswordListFragment : Fragment() {
                 title = "",
                 email = "",
                 username = "",
-                password = "",
+                cipherText = "",
+                password = "".toByteArray(),
                 iv = "".toByteArray(),
                 accessDate = Date(),
             )
@@ -129,6 +152,5 @@ class PasswordListFragment : Fragment() {
             )
         }
     }
-
 
 }

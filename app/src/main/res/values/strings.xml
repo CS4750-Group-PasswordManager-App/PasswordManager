@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">PasswordManager</string>
+    <string name="empty_list">There are no passwords saved</string>
+    <string name="empty_list_create_button">Create Password Entry</string>
     <string name="password_title_hint">Enter Name</string>
     <string name="password_title">Title: *</string>
     <string name="password_email_hint">Enter Email</string>
