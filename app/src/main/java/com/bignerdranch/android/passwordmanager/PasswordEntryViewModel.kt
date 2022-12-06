@@ -67,7 +67,6 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
     }
 
     fun storePassword() {
-        password.value?.let { passwordRepository.updatePassword(it)}
         encryptPassword()
         onCleared()
     }
@@ -88,29 +87,16 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
             println(cipher.second)
             println(String(cipher.second))
 
-//            println(cryptoManager.decrypt(cipher.first, cipher.second))
-//
-//            var cipherFirst = cipher.first.toList()
-//            var cipherSecond = cipher.second.toList()
-//
-//            println("${cipherFirst} : ${cipherSecond}")
-//
-//            println("Conversion")
-//
-//            println("${cipherFirst.toByteArray()} : ${cipherSecond.toByteArray()}")
-//
-//            println("${String(cipherFirst.toByteArray())}")
-//
-//
-//            println("DECRYPTING")
-//            println(cryptoManager.decrypt(cipherFirst.toByteArray(), cipherSecond.toByteArray()))
+            //Store Ciphertext in password
+            updatePassword { password -> password.copy(cipherText = String(cipher.first)) }
 
+            //Store All values in database
+            password.value?.let { passwordRepository.updatePassword(it)}
 
+            //Store Cipher Vectors
             passwordRepository.updateVector(cipher.second, it.id)
             passwordRepository.updatePasswordVector(cipher.first, it.id)
-
-            passwordRepository.storeEncryption(String(cipher.first), it.id)
-
+            //passwordRepository.storeEncryption(String(cipher.first), it.id)
         }
 
     }

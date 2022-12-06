@@ -120,18 +120,9 @@ class PasswordViewFragment : Fragment() {
 
                 var save = passwordEntry.text;
                 println(save)
-                //                passwordEntryViewModel.updatePassword { oldPassword ->
-//                    oldPassword.copy(password = text.toString())
-//                }
-
 
 
                 var password : EditText = view.findViewById(R.id.password_entry)
-                //var cipher = cryptoManager.encrypt(password.text.toString())
-
-                //password.setText(cipher.first.toString())
-                //Log.d(TAG, "${password.text}")
-
 
                 passwordEntryViewModel.updatePassword { oldPassword ->
                     oldPassword.copy(cipherText = passwordEntry.text.toString())
@@ -182,7 +173,8 @@ class PasswordViewFragment : Fragment() {
             }
             if (passwordEntry.text.toString() != password.cipherText){
                 passwordEntry.setText(password.cipherText)
-                //Log.d(TAG, "${password.password} : ${password.iv}")
+                Log.d(TAG, "$password")
+
             }
         }
 
