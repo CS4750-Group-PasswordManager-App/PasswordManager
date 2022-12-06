@@ -96,7 +96,7 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
             //Store Cipher Vectors
             passwordRepository.updateVector(cipher.second, it.id)
             passwordRepository.updatePasswordVector(cipher.first, it.id)
-            //passwordRepository.storeEncryption(String(cipher.first), it.id)
+            passwordRepository.storeEncryption(String(cipher.first), it.id)
         }
 
     }
