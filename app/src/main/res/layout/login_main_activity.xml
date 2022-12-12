@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/blue_gradient_background">
@@ -16,29 +17,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <LinearLayout
         android:id="@+id/login_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="369dp"
+        android:layout_height="152dp"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:orientation="vertical">
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/login_entry" />
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="@string/login_entry"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <EditText
-            android:id="@+id/etName"
+            android:id="@+id/userInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/login_entry_hint" />
+            android:hint="@string/login_entry_hint"
+            android:inputType="textWebEmailAddress|textPersonName|text"
+            android:minHeight="48dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/hint_text_color"
+            android:textSize="20sp"
+            android:importantForAutofill="no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/login_password"
@@ -47,33 +65,45 @@
         android:layout_margin="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_username">
+        app:layout_constraintTop_toBottomOf="@+id/login_username"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/password_decrypted" />
+            android:text="@string/password_decrypted"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etPassword"
+        <EditText
+            android:id="@+id/login_password_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/password_entry_background"
+            android:hint="@string/password_decrypted_hint"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:textColor="@color/white"
             android:textColorHint="@color/hint_text_color"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/white">
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <EditText
-                android:id="@+id/login_password_entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/password_entry_background"
-                android:hint="@string/password_decrypted_hint"
-                android:importantForAutofill="no"
-                android:inputType="textPassword"
-                android:minHeight="48dp"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/enter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_password"
+        app:layout_constraintVertical_bias="0.503" />
 </androidx.constraintlayout.widget.ConstraintLayout>
