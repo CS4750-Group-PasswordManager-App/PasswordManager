@@ -86,21 +86,18 @@ class PasswordViewFragment : Fragment() {
                 }
             }
 
-//            passwordEntry.doOnTextChanged { text, _, _, _ ->
-//                //password = password.copy(password = text.toString())
-//                passwordEntryViewModel.updatePassword { oldPassword ->
-//                    oldPassword.copy(password = text.toString())
-//                }
-//            }
+            passwordEntry.doOnTextChanged { text, _, _, _ ->
+                //password = password.copy(password = text.toString())
+                passwordEntryViewModel.updatePassword { oldPassword ->
+                    oldPassword.copy(cipherText = passwordEntry.text.toString())
+                }
+            }
+
+            decryptButton.visibility = View.GONE
 
             decryptButton.setOnClickListener {
                 var password : EditText = view.findViewById(R.id.password_entry)
-                println("BEFORE CIPHER")
 
-                //var cipher = cryptoManager.decrypt(pass.toByteArray(), iv)
-
-
-                //decryptedPassword.text = "DECRYPTED"
                 if(decryptedPassword.isVisible){
                     decryptedPassword.visibility = View.INVISIBLE
                     decryptButton.text = "Decrypt Password"
@@ -174,8 +171,9 @@ class PasswordViewFragment : Fragment() {
             if (passwordEntry.text.toString() != password.cipherText){
                 passwordEntry.setText(password.cipherText)
                 Log.d(TAG, "$password")
-
+                decryptButton.visibility = View.VISIBLE
             }
+
         }
 
     }
