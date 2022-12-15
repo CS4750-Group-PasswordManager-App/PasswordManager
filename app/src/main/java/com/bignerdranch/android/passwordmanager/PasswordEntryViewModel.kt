@@ -53,17 +53,6 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
         password.value?.let {
                 passwordRepository.updateLastOpened(recentDate, it.id) }
 
-
-//
-//        var cipher = password.value?.let { cryptoManager.encrypt(it.password) }
-//        if (cipher != null) {
-//            println("Cipher: " + String(cipher.first))
-//        }
-//
-//        var decryptedText = cipher?.let { cryptoManager.decrypt(it.first, cipher.second) }
-//
-//        println("Decrypted_Data: $decryptedText" )
-
     }
 
     fun storePassword() {

@@ -3,6 +3,7 @@ package com.bignerdranch.android.passwordmanager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.passwordmanager.databinding.ListEntryPasswordBinding
 import java.util.UUID
@@ -37,7 +38,6 @@ class PasswordHolder(private val binding: ListEntryPasswordBinding) : RecyclerVi
         binding.passwordEmail.text = displayEmail(password.email.toString())
 
         binding.root.setOnClickListener {
-            // Decrypt
             onPasswordEntryClicked(password.id)
         }
     }

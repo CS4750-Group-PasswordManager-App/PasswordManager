@@ -11,7 +11,5 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        //Encrypt all passwords and all entries and
-        //Update every value from database
     }
 }
