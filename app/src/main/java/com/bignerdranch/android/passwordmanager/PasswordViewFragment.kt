@@ -115,6 +115,9 @@ class PasswordViewFragment : Fragment() {
                 var save = passwordEntry.text;
                 println(save)
 
+                if(!decryptButton.isVisible && !buttonPressed){
+                    buttonPressed = true
+                }
 
                 var password : EditText = view.findViewById(R.id.password_entry)
 
