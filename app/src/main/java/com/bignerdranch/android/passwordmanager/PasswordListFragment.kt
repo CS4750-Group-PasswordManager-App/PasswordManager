@@ -1,5 +1,6 @@
 package com.bignerdranch.android.passwordmanager
 
+import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -19,6 +20,7 @@ import com.bignerdranch.android.passwordmanager.PasswordListFragmentDirections
 import com.bignerdranch.android.passwordmanager.databinding.FragmentPasswordListBinding
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.math.log
 
 private const val TAG = "PasswordListFragment"
 
@@ -55,6 +57,9 @@ class PasswordListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d(TAG, "ViewCreated: ${searchView?.query}")
+
+
         binding.apply {
             emptyListButton.setOnClickListener {
                 showNewPassword()
@@ -76,9 +81,9 @@ class PasswordListFragment : Fragment() {
                     }
 
                     binding.passwordRecyclerView.adapter = PasswordListAdapter(passwords) { passwordId ->
+                        passwordListViewModel.setQuery("")
+                        searchView?.setQuery("", true)
                         searchView?.clearFocus()
-
-                        // Decryption
 
                         findNavController().navigate(
                             PasswordListFragmentDirections.showPasswordEntry(passwordId)
@@ -102,6 +107,8 @@ class PasswordListFragment : Fragment() {
 
         val searchEntry: MenuItem = menu.findItem(R.id.menu_item_search)
 
+        Log.d(TAG, "HERE: ${searchView?.query}")
+
         searchView = searchEntry.actionView as? SearchView
         searchView?.isSubmitButtonEnabled = true
 
@@ -113,6 +120,7 @@ class PasswordListFragment : Fragment() {
             }
             override fun onQueryTextChange(query: String?): Boolean {
                 passwordListViewModel.setQuery(query ?: "")
+                Log.d(TAG, "QUERY: $query")
                 return true
             }
         })
@@ -129,6 +137,15 @@ class PasswordListFragment : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+
+    override fun onDestroyOptionsMenu() {
+        super.onDestroyOptionsMenu()
+
+        Log.d(TAG, "MENU DESTROYED")
+        searchView?.setQuery("", true)
+        passwordListViewModel.setQuery("")
     }
 
     private fun showNewPassword() {

@@ -20,7 +20,7 @@ interface PasswordDao {
     @Query("SELECT * From Password Where id=(:id)")
     suspend fun getPassword(id: UUID) : Password
 
-    @Query("SELECT * From PASSWORD Where title LIKE (:title)")
+    @Query("SELECT * From PASSWORD Where title LIKE (:title) Order By accessDate DESC")
     fun getPasswordEntry(title: String): Flow<List<Password>>
 
     @Query("Update PASSWORD Set accessDate = (:accessDate) WHERE id = (:id)")
