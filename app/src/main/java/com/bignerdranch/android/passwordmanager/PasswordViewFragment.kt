@@ -64,6 +64,8 @@ class PasswordViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var buttonPressed = false
+
         binding.apply {
             titleEntry.doOnTextChanged { text, _, _, _ ->
                 //password = password.copy(title = text.toString())
@@ -97,24 +99,19 @@ class PasswordViewFragment : Fragment() {
 
             decryptButton.setOnClickListener {
                 var password : EditText = view.findViewById(R.id.password_entry)
-
-                if(decryptedPassword.isVisible){
-                    decryptedPassword.visibility = View.INVISIBLE
-                    decryptButton.text = "Decrypt Password"
-                }
-                else {
-
-                    decryptedPassword.text = passwordEntryViewModel.decryptPassword()
-                    decryptedPassword.visibility = View.VISIBLE
-                    decryptButton.text = "Encrypt Password"
-
-                }
+                println("Password: View Fragment: Button Pressed")
+                passwordEntry.setText(passwordEntryViewModel.decryptPassword())
+                decryptButton.text = "Decrypted"
+                buttonPressed = true
+                passwordEntry.isFocusableInTouchMode = true
+                //decryptButton.isEnabled = false
+                decryptButton.isClickable = false
             }
-
 
             saveEntryButton.setOnClickListener {
                 // Save & Close Entries
 
+                println("Password: Save Button Pressed")
                 var save = passwordEntry.text;
                 println(save)
 
@@ -125,7 +122,9 @@ class PasswordViewFragment : Fragment() {
                     oldPassword.copy(cipherText = passwordEntry.text.toString())
                 }
 
-                passwordEntryViewModel.storePassword()
+                passwordEntryViewModel.storePassword(buttonPressed)
+
+
                 findNavController().navigate(PasswordViewFragmentDirections.savePasswordEntry())
             }
 
@@ -170,8 +169,8 @@ class PasswordViewFragment : Fragment() {
             }
             if (passwordEntry.text.toString() != password.cipherText){
                 passwordEntry.setText(password.cipherText)
-                Log.d(TAG, "$password")
                 decryptButton.visibility = View.VISIBLE
+                passwordEntry.isFocusable = false
             }
 
         }

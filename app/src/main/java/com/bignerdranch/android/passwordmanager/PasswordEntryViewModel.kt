@@ -52,11 +52,12 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
         val recentDate = Date()
         password.value?.let {
                 passwordRepository.updateLastOpened(recentDate, it.id) }
-
     }
 
-    fun storePassword() {
-        encryptPassword()
+    fun storePassword(decrypted : Boolean) {
+        if(decrypted){
+            encryptPassword()
+        }
         onCleared()
     }
 
