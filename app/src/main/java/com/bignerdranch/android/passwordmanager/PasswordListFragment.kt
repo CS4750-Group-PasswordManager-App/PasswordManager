@@ -57,9 +57,6 @@ class PasswordListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d(TAG, "ViewCreated: ${searchView?.query}")
-
-
         binding.apply {
             emptyListButton.setOnClickListener {
                 showNewPassword()
@@ -98,7 +95,6 @@ class PasswordListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        println("LIST DESTROYED")
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -161,8 +157,6 @@ class PasswordListFragment : Fragment() {
                 iv = "".toByteArray(),
                 accessDate = Date(),
             )
-            println("Just Created INITIAL V :" + newPassword.iv)
-
             passwordListViewModel.addPassword(newPassword)
             findNavController().navigate(
                 PasswordListFragmentDirections.showPasswordEntry((newPassword.id))

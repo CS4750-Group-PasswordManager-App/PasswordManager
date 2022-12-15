@@ -70,12 +70,6 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
     fun encryptPassword() {
         password.value?.let {
             var cipher = cryptoManager.encrypt(it.cipherText)
-            println("INITIAL IV: " + it.iv)
-            println(cipher.first)
-            println(String(cipher.first))
-            println(cipher.second)
-            println(String(cipher.second))
-
             //Store Ciphertext in password
             updatePassword { password -> password.copy(cipherText = String(cipher.first)) }
 
@@ -93,15 +87,10 @@ class PasswordEntryViewModel(passwordId: UUID) : ViewModel() {
     fun decryptPassword() : String {
         var plain = ""
         password.value?.let {
-            println(it.password)
-
-            println("DECRYPT")
-            println("${it.password} : ${it.iv}")
 
             var cipherFirst = it.password.toList()
             var cipherSecond = it.iv.toList()
 
-            println("${cipherFirst} : ${cipherSecond}")
             plain = cryptoManager.decrypt(cipherFirst.toByteArray(), cipherSecond.toByteArray())
         }
 
