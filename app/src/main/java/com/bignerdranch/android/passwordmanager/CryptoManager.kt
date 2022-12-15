@@ -63,9 +63,6 @@ class CryptoManager {
 
     fun decrypt(data: ByteArray, ivBytes: ByteArray): String {
 
-        println(data)
-        println(ivBytes)
-
         val cipher = Cipher.getInstance(TRANSFORMATION)
         val spec = IvParameterSpec(ivBytes)
 
