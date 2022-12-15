@@ -42,7 +42,6 @@ class PasswordListViewModel : ViewModel() {
 
     fun setQuery(query: String) {
         val searchQuery = "%$query%"
-        Log.d(TAG, "Model: $searchQuery")
         viewModelScope.launch {
             retrievePasswordEntries(searchQuery).collect {
                 _passwords.value = it
@@ -52,7 +51,6 @@ class PasswordListViewModel : ViewModel() {
 
     private fun retrievePasswordEntries(query: String) : Flow<List<Password>> {
         return if(query != "%%" && query != "" && query != null && query != " "){
-            Log.d(TAG, "Retrieved Query:$query")
             passwordRepository.getPasswordEntry(query)
         }
         else {
