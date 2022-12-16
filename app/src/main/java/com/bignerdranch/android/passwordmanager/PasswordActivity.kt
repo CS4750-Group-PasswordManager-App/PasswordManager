@@ -12,6 +12,7 @@ class PasswordActivity : AppCompatActivity() {
     private lateinit var userName : String
     private lateinit var passWord : String
     private lateinit var enterButton: Button
+    private lateinit var signupButton: Button
     lateinit var userNameInput : EditText
     lateinit var passwordInput : EditText
 
@@ -23,6 +24,7 @@ class PasswordActivity : AppCompatActivity() {
         passwordInput = findViewById(R.id.login_password_entry)
 
         enterButton = findViewById(R.id.enter_button)
+        signupButton = findViewById(R.id.signup_button)
 
         userName = userNameInput.toString()
         passWord = passwordInput.toString()
