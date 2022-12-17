@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.math.sign
 
 class PasswordActivity : AppCompatActivity() {
 
@@ -42,6 +43,11 @@ class PasswordActivity : AppCompatActivity() {
             enterButton.setEnabled(false)
         }
 
+        signupButton.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
     }
 
